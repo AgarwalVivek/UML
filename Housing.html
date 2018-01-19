@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>Housing Dashboard</title>
+	<style> 
+.flex-container {
+    display: -webkit-flex;
+    display: flex;  
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    text-align: center;
+}
+
+.flex-container > * {
+    padding: 15px;
+    -webkit-flex: 1 100%;
+    flex: 1 100%;
+}
+
+.article {
+    text-align: left;
+}
+
+header {background: black;color:white;}
+footer {background: #000;color:white;}
+.nav {background:#eee;}
+
+.nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+.nav ul a {
+    text-decoration: none;
+}
+
+@media all and (min-width: 768px) {
+    .nav {text-align:left;-webkit-flex: 1 auto;flex:1 auto;-webkit-order:1;order:1;}
+    .article {-webkit-flex:5 0px;flex:5 0px;-webkit-order:2;order:2;}
+    footer {-webkit-order:3;order:3;}
+}
+</style>
+	<link rel="icon" href="images/icon.png" type="image/png" />
+    <link rel="stylesheet" type="text/css" href="styles/Custom.css">
+	<link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
+	<script src="node_modules/es6/ES6.js"></script>
+	<script src="node_modules/file-saver/FileSaver.js"></script>
+	<script src="node_modules/dataframe-js/dist/dataframe.js"></script>
+	<script src="node_modules/chart.js/dist/Chart.js"></script>
+	<script src="js/HousingMain.js"></script>
+	<script src="js/ModelUtility.js"></script>
+	<script src="js/ControllerUtility.js"></script>
+	<script src="js/constants/Constant.js"></script>
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<!--	<link href="node_modules/fancygrid/client/fancy.min.css" rel="stylesheet">
+  	<script src="node_modules/fancygrid/client/fancy.min.js"></script> -->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+
+	<!-- <script>
+		//Fancy.MODULESDIR = "http://cdn.fancygrid.com/modules/";
+	</script> -->
+</head>
+<body>
+<div>
+	<!--<header>
+  <h1>Housing Dashboard</h1>
+</header>-->
+<img src="images/logo_final.jpg" height="350" width="100%">
+</div>
+	<!--<img src="images/logo.png" alt="logo"  align="center">-->
+	<div class="datasetName">
+	<h3>Select the Dataset</h3>
+	</div>
+    <div>         
+        <form style="width:65%">
+		<div>
+          <select id="datasets">
+              <option value="austin.csv" selected="selected">Austin</option>              
+              <option value="chicago.csv">Chicago</option>
+              <option value="conencticut.csv">Conencticut</option>
+              <option value="seattle.csv">Seattle</option>
+              <option value="nyc.csv">NewYork</option>
+        </select>          <br><br>
+        <input type="button" name="Select" onclick="fetch()" value="Load Dataset" ></input><br><br>
+      
+ <div id="table" class="table-responsive dataTable"></div>
+		</div>
+        </form>
+        
+       <!-- <hr class="style18">-->
+		<div id="filter"></div>
+		<div id="filter-row"  hidden="true">
+			<br>
+			<div id="categorical-filter">
+				<label style="display:block;font-weight:bold">Please Select the you want to apply Filters</label>
+				<div align="center"id="categorical-filter-checkbox" style="display:flex; flex-flow:row wrap;"></div>
+			</div>
+			<br>
+			<div id="numerical-condition">
+				<label style="display:block;font-weight:bold">Please Select The Filter Conditions</label>
+				<input type="radio" name="numericalFilter" value="greaterThanEqualTo"> Greater Than Equal To</input><br />
+				<input type="radio" name="numericalFilter" value="lessThanEqualTo"> Less Than Equal To</input><br />
+				<input type="radio" name="numericalFilter" value="equalTo"> Equal To</input><br />
+			</div>
+			<br>
+			<div id="numerical-value">
+				<label style="display:block;font-weight:bold">Please Enter Numerical Value To Filter</label>
+				<input id= "numericalFilter" style="background-color: white; border: groove;color: black;padding: 1px 0px; text-align: center; text-decoration: none;"  type="number" name="numericalFilter" value="numericalFilter"></input>
+			</div>
+			<br>
+			
+			
+			<div id="plot-graph">
+			<form>
+				<label style="display:block;font-weight:bold">Please Select the Chart Types to load </label>
+				<input type="checkbox" id="lineChart" name="lineChart" value="Line Chart"> Line Chart</input>
+				<input type="checkbox" id="barChart" name="barChart" value="Bar Chart"> Bar Chart</input>
+				<input type="checkbox" id="pieChart" name="pieChart" value="Pie Chart"> Pie Chart</input>
+				<input type="checkbox" id="stackedChart" name="stackedChart" value="Stacked Chart"> Stack Chart</input>
+				<input type="checkbox" id="pivotChart" name="pivotChart" value="Pivot Chart"> Pivot Chart</input><br /><br />
+				<input type="button" name="applyCharts" onclick="applyChart()" value="Apply Charts"></input><br>
+			</form>	
+			</div>
+		</div>
+    </div>
+	<div id="parentChart" hidden="true">
+		<div id="childChart" class="chart">
+			<canvas id="piechartcanvas"></canvas>
+			<canvas id="barchartcanvas"></canvas>
+			<canvas id="linechartcanvas"></canvas>
+			<br/>
+			<canvas id="stackedchartcanvas"></canvas>
+			<canvas id="pivotchartcanvas"></canvas>
+		</div>
+
+		</div>
+	<div class="seperator"></div>
+	<br><br><br><br><br><br>
+<footer>Copyright &copy; UML_Team_24</footer>
+</body>
+</html>
+
